@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: "Times New Roman", Times, serif, sans-serif;
+}
+
+.app {
+  padding: 20px;
+}
+
+.search-header {
+  background: #3f51b5;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #3f51b5;
+  cursor: pointer;
+  color: blanchedalmond;
+  border: 1px dashed black;
+  border-radius: 10px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.image-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.load-more-btn {
+  padding: 10px 20px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  margin-top: 20px;
+}
+
+.modal {
+  position: relative;
+  background: white;
+  padding: 20px;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  overflow: auto;
+  border-radius: 10px;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
