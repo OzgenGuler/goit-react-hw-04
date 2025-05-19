@@ -1,11 +1,19 @@
 body {
   margin: 0;
   font-family: "Times New Roman", Times, serif, sans-serif;
+  background: gray;
+  color: #333;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
 }
 
-.app {
-  padding: 20px;
-}
+/* .app {
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+} */
 
 .search-header {
   background: #3f51b5;
@@ -35,18 +43,41 @@ button {
   border-radius: 10px;
 }
 
-.gallery {
+/* .image-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 10px;
   margin-top: 20px;
+  list-style: none;
+} */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.image-gallery-item {
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+}
+.image-card {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease, transform 0.5s ease;
 }
 
 .image-card img {
-  width: 100%;
-  height: auto;
-  display: block;
   cursor: pointer;
+  gap: 10px;
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.5s ease;
 }
 
 .loader {
@@ -55,10 +86,10 @@ button {
   margin: 20px 0;
 }
 
-.load-more-container {
+.load-more {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  font-size: 87px;
 }
 
 .load-more-btn {
@@ -67,12 +98,14 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+  font-size: 32px;
 }
 
 .error {
   text-align: center;
   color: red;
   margin-top: 20px;
+  background-color: yellow;
 }
 
 .modal {
@@ -93,4 +126,46 @@ button {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+/* modal.css */
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  z-index: 1001;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+
+.close-button {
+  margin-top: 1rem;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.close-button:hover {
+  background-color: #ff1a1a;
+}
+.close-button:focus {
+  outline: none;
 }

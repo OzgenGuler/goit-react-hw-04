@@ -5,7 +5,7 @@ const SearchBar = ({ onSubmit }) => {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefult();
+    e.preventDefault();
     if (query.trim() === "") {
       toast.error("Lütfen bir arama terimi girin.");
       return;

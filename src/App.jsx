@@ -6,7 +6,6 @@ import ImageModal from "./components/ImageModal";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import LoadMoreBtn from "./components/LoadMoreBtn";
-import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
 const API_URL = "https://api.unsplash.com/search/photos";
@@ -19,7 +18,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     if (!query) return;
@@ -36,11 +34,9 @@ const App = () => {
           },
         });
         setImages((prev) => [...prev, ...response.data.results]);
-        setTotalPages(response.data.total_pages);
       } catch (error) {
         setError("Bir hata oluştu. Lütfen tekrar deneyin.");
-        toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
-        console.error("Error fetching images:", error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -49,8 +45,11 @@ const App = () => {
   }, [query, page]);
 
   const handleSearch = (newQuery) => {
-    if (newQuery.trim() === "") {
-      setError("Lütfen bir arama terimi girin.");
+    if (!newQuery.trim()) {
+      setError("Lütfen bir arama terimi girin. !!");
+      return;
+    } else if (newQuery === query) {
+      setError("!! Aynı terimi tekrar arayamazsınız. !!");
       return;
     }
     setQuery(newQuery);
@@ -58,34 +57,30 @@ const App = () => {
     setPage(1);
     setError(null);
   };
+  const openModal = (image) => {
+    setSelectedImage(image);
+  };
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
   const handleLoadMore = () => {
-    if (page < totalPages) {
-      setPage((prev) => prev + 1);
-    } else {
-      toast.error("Daha fazla resim yok.");
-    }
+    setPage((prevPage) => prevPage + 1);
   };
   const loadMore = () => {
-    if (page < totalPages) {
-      handleLoadMore();
-    } else {
-      toast.error("Daha fazla resim yok.");
-    }
+    handleLoadMore();
   };
 
   return (
     <div className="app">
-      <Toaster position="top-right" reverseOrder={true} />
       <SearchBar onSubmit={handleSearch} />
       {error && <ErrorMessage message={error} />}
-      <ImageGallery images={images} onImageClick={setSelectedImage} />
+      <ImageGallery images={images} onImageClick={openModal} />
       {loading && <Loader />}
-      {images.length > 0 && page < totalPages && !loading && (
-        <LoadMoreBtn onClick={loadMore} />
-      )}
+      {images.length > 0 && !loading && <LoadMoreBtn onClick={loadMore} />}
       <ImageModal
         isOpen={!!selectedImage}
-        onClose={() => setSelectedImage(null)}
+        onClose={closeModal}
         image={selectedImage}
       />
     </div>
