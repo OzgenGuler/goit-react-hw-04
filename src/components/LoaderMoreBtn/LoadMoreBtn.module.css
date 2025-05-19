@@ -1,0 +1,34 @@
+.load_more {
+  display: flex;
+  justify-content: center;
+  font-size: 87px;
+}
+
+.loadmore_btn {
+  margin-top: 18px;
+  padding: 10px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 32px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 3px 3px 5px white;
+}
+
+.loadmore_btn:hover {
+  background-color: #303f9f;
+  transform: scale(1.05);
+}
+.loadmore_btn:active {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.loadmore_btn:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+.loadmore_btn:focus {
+  outline: none;
+}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import css from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = ({ onSubmit, isVisible, isSticky }) => {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
@@ -14,10 +15,14 @@ const SearchBar = ({ onSubmit }) => {
     setQuery("");
   };
   return (
-    <header className="search-header">
-      <form className="search-form" onSubmit={handleSubmit}>
+    <header
+      className={`${css.searchhder} ${isSticky ? css.sticky : ""} ${
+        !isVisible ? css.hidden : ""
+      }`}
+    >
+      <form className={css.search_form} onSubmit={handleSubmit}>
         <input
-          className="input"
+          className={css.input}
           type="text"
           autoComplete="off"
           autoFocus
@@ -25,7 +30,7 @@ const SearchBar = ({ onSubmit }) => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button type="submit" className="button">
+        <button type="submit" className={css.search_button}>
           Ara
         </button>
       </form>

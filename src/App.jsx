@@ -1,12 +1,13 @@
 // App.jsx
 import { useState, useEffect } from "react";
-import SearchBar from "./components/SearchBar";
-import ImageGallery from "./components/ImageGallery";
-import ImageModal from "./components/ImageModal";
-import Loader from "./components/Loader";
-import ErrorMessage from "./components/ErrorMessage";
-import LoadMoreBtn from "./components/LoadMoreBtn";
 import axios from "axios";
+import SearchBar from "./components/SearchBar/SearchBar";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
+import ImageModal from "./components/ImageModal/ImageModal";
+import Loader from "./components/Loader/Loader";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "./components/LoaderMoreBtn/LoadMoreBtn";
+import css from "./App.module.css";
 
 const API_URL = "https://api.unsplash.com/search/photos";
 const ACCESS_KEY = "44PYxN0tDA79HmmvuZzTIaTghYcY0x94eQ-s0_49_Is";
@@ -18,6 +19,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     if (!query) return;
@@ -46,10 +48,14 @@ const App = () => {
 
   const handleSearch = (newQuery) => {
     if (!newQuery.trim()) {
-      setError("Lütfen bir arama terimi girin. !!");
+      setError("Lütfen bir arama terimi girin.!!");
       return;
     } else if (newQuery === query) {
-      setError("!! Aynı terimi tekrar arayamazsınız. !!");
+      alert(
+        "Aynı terim yerine farklı bir şeyler aramak ister misiniz ?" +
+          "\n" +
+          "Mesela: 'cat' yerine 'dog' arayabilirsiniz."
+      );
       return;
     }
     setQuery(newQuery);
@@ -59,25 +65,46 @@ const App = () => {
   };
   const openModal = (image) => {
     setSelectedImage(image);
+    document.body.style.overflow = "hidden";
   };
   const closeModal = () => {
     setSelectedImage(null);
+    document.body.style.overflow = "auto";
   };
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
-  const loadMore = () => {
-    handleLoadMore();
-  };
+  // const loadMore = () => {
+  //   handleLoadMore();
+  // };
+  useEffect(() => {
+    let prevScrollpos = window.pageYOffset;
+
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      const isAtTop = currentScrollPos === 0;
+      if (prevScrollpos > currentScrollPos || isAtTop) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+      prevScrollpos = currentScrollPos;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="app">
-      <SearchBar onSubmit={handleSearch} />
+    <div className={css.app}>
+      <SearchBar onSubmit={handleSearch} isVisible={isVisible} />
       {error && <ErrorMessage message={error} />}
-      <ImageGallery images={images} onImageClick={openModal} />
+      <ImageGallery images={images} openModal={openModal} />
       {loading && <Loader />}
-      {images.length > 0 && !loading && <LoadMoreBtn onClick={loadMore} />}
+      {images.length > 0 && !loading && (
+        <LoadMoreBtn onClick={handleLoadMore} />
+      )}
       <ImageModal
         isOpen={!!selectedImage}
         onClose={closeModal}
