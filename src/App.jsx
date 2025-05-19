@@ -13,8 +13,8 @@ const API_URL = "https://api.unsplash.com/search/photos";
 const ACCESS_KEY = "44PYxN0tDA79HmmvuZzTIaTghYcY0x94eQ-s0_49_Is";
 
 const App = () => {
-  const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
+  const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
